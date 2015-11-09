@@ -10,9 +10,20 @@ password=$(awk -F, '{print $2}' <<<$OUTPUT)
 
 echo $user_id;
 echo $password;
+database="bash";
 
+echo $database;
 
 if [[ ( "$user_id" -eq 'vaibhav' && "$password" = "gulati" )]]
-    then echo 'hello Mr. behl';
-    exit 1
+#	then mysql --user=$user_id --password=$password $database;
+#	then mysql -u major -h 50.62.209.49 3306 -p
+
+# database name-> bash , schema-> id int, name varchar(10/20)
+#please change login details
+#please put some data in the table to see output
+
+	then echo "SELECT id,name FROM bash_table" | mysql --user=$user_id --password=$password $database | tr '\t' '\n' | zenity --list --title="Details" --text="" --column="id" --column="Name"
+
+else
+	zenity --error --text "Check User_id/Password";
 fi
