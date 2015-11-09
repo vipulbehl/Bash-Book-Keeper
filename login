@@ -14,6 +14,21 @@ database="bash";
 
 echo $database;
 
+function1 () {
+query=$(zenity --entry --text "Enter Query?" --width=500 --entry-text="SELECT id,name FROM bash_table");
+if [[ -z $query ]]
+then function2;
+fi
+}
+
+function2 () {
+query=$(zenity --entry --text "Enter Query!" --width=500 --entry-text="SELECT id,name FROM bash_table");
+if [[ -z $query ]]
+then function1;
+fi
+
+}
+
 if [[ ( "$user_id" -eq 'vaibhav' && "$password" = "gulati" )]]
 #	then mysql --user=$user_id --password=$password $database;
 #	then mysql -u major -h 50.62.209.49 3306 -p
@@ -22,7 +37,20 @@ if [[ ( "$user_id" -eq 'vaibhav' && "$password" = "gulati" )]]
 #please change login details
 #please put some data in the table to see output
 
-	then echo "SELECT id,name FROM bash_table" | mysql --user=$user_id --password=$password $database | tr '\t' '\n' | zenity --list --title="Details" --text="" --column="id" --column="Name"
+
+
+	#then query=$(zenity --entry --text "Enter Query?" --width=500 --entry-text="SELECT id,name FROM bash_table");
+	then function1;
+	if [[ ! -z $query ]]
+	then echo $query | mysql --user=$user_id --password=$password $database | tr '\t' '\n' | zenity --list --title="Details" --text="" --column="id" --column="Name";
+	else
+	#echo query=$(zenity --entry --text "Re-enter Query!!!" --width=500 --entry-text="SELECT id,name FROM bash_table");
+	function2;
+	fi	
+
+
+
+#echo "SELECT id,name FROM bash_table" | mysql --user=$user_id --password=$password $database | tr '\t' '\n' | zenity --list --title="Details" --text="" --column="id" --column="Name"
 
 else
 	zenity --error --text "Check User_id/Password";
