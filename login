@@ -13,6 +13,6 @@ echo $password;
 
 
 if [[ ( "$user_id" -eq 'vaibhav' && "$password" = "gulati" )]]
-    then echo 'hello vaibhav';
+    then echo 'hello vaibhav gulati';
     exit 1
 fi
