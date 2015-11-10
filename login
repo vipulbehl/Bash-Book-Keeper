@@ -15,21 +15,21 @@ database="bash";
 echo $database;
 
 function1 () {
-query=$(zenity --entry --text "Enter Query?" --width=500 --entry-text="SELECT id,name FROM bash_table");
+query=$(zenity --entry --text "Enter Query?" --width=500 --entry-text="SELECT id,isbn,book_name,author_name FROM book_record");
 if [[ -z $query ]]
 then function2;
 fi
 }
 
 function2 () {
-query=$(zenity --entry --text "Enter Query!" --width=500 --entry-text="SELECT id,name FROM bash_table");
+query=$(zenity --entry --text "Enter Query!" --width=500 --entry-text="SELECT id,isbn,book_name,author_name FROM book_record");
 if [[ -z $query ]]
 then function1;
 fi
 
 }
 
-if [[ ( "$user_id" -eq 'vaibhav' && "$password" = "gulati" )]]
+if [[ ( "$user_id" -eq 'major' && "$password" = "Password123?" )]]
 #	then mysql --user=$user_id --password=$password $database;
 #	then mysql -u major -h 50.62.209.49 3306 -p
 
@@ -42,7 +42,7 @@ if [[ ( "$user_id" -eq 'vaibhav' && "$password" = "gulati" )]]
 	#then query=$(zenity --entry --text "Enter Query?" --width=500 --entry-text="SELECT id,name FROM bash_table");
 	then function1;
 	if [[ ! -z $query ]]
-	then echo $query | mysql --user=$user_id --password=$password $database | tr '\t' '\n' | zenity --list --title="Details" --text="" --column="id" --column="Name";
+	then echo $query | mysql -A -u $user_id -h 50.62.209.49 major -p$password | tr '\t' '\n' | zenity --list --title="Details" --text="" --column="id" --column="isbn" --column="book_name" --column="author_name";
 	else
 	#echo query=$(zenity --entry --text "Re-enter Query!!!" --width=500 --entry-text="SELECT id,name FROM bash_table");
 	function2;
