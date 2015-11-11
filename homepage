@@ -1,0 +1,27 @@
+#Setting permissions for all the files
+chmod 755 homepage
+chmod 755 login
+chmod 755 register
+
+#Code to create the first login popup
+
+OUTPUT=$(zenity --forms --title="Login/Register" --text="1.Login\t2.Signup" --separator="," --add-entry="Enter Choice(1/2)")
+accepted=$?
+if ((accepted != 0)); then
+    echo "something went wrong"
+    exit 1
+fi
+
+#Check which choice did the user entered
+
+user_choice=$(awk -F, '{print $1}' <<<$OUTPUT)
+
+#Performing actions on user supplied values
+
+if [[ ( "$user_choice" -eq '1')]]
+	then ~/login;
+elif [[ ( "$user_choice" -eq '2')]]
+	then ~/register;
+else
+	zenity --error --text "Invalid option entered";
+fi
